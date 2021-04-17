@@ -15,3 +15,4 @@ More info [here](https://github.com/am15h/tflite_flutter_plugin#important-initia
 <i>Shot on Pixel 4</i>
 
 <b>The pre-built APK can be found [here](https://drive.google.com/file/d/1QRdq28doFegBL8x7daaZ5ivwXDjslfkg/view?usp=sharing).</b>
+# Object-Detection

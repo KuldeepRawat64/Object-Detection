@@ -42,7 +42,15 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    initStateAsync();
+  }
+
+  void initStateAsync() async {
     WidgetsBinding.instance.addObserver(this);
+
+    // Spawn a new isolate
+    isolateUtils = IsolateUtils();
+    await isolateUtils.start();
 
     // Camera initialization
     initializeCamera();
@@ -52,10 +60,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
     // Initially predicting = false
     predicting = false;
-
-    // Spawn a new isolate
-    isolateUtils = IsolateUtils();
-    isolateUtils.start();
   }
 
   /// Initializes the camera by setting [cameraController]
@@ -156,7 +160,9 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
         cameraController.stopImageStream();
         break;
       case AppLifecycleState.resumed:
-        await cameraController.startImageStream(onLatestImageAvailable);
+        if (!cameraController.value.isStreamingImages) {
+          await cameraController.startImageStream(onLatestImageAvailable);
+        }
         break;
       default:
     }
